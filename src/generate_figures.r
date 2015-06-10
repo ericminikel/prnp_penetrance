@@ -1,7 +1,6 @@
 options(stringsAsFactors=FALSE)
 require(sqldf)
 require(binom)
-setwd('~/d/sci/src/prnp_penetrance')
 
 # Table S1. Allele counts of rare PRNP variants in 16,025 definite and probable prion disease cases in 9 countries
 ac_case = read.table('supplement/table_s01_surveillance_allele_counts.tsv',header=TRUE,sep='\t',quote='',comment.char='')
