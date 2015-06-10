@@ -7,7 +7,7 @@ from collections import Counter
 
 import argparse
 
-parser = argparse.ArgumentParser(description='Generate a null distribution of diversity scores')
+parser = argparse.ArgumentParser(description='Summarize the genotypes for a list of individuals')
 parser.add_argument('--vcf',  dest='vcf', action='store',
                     help='Genotypes VCF (path)', type=str)
 parser.add_argument('--samples', dest='samples', action='store',
