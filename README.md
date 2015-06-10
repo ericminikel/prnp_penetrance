@@ -11,6 +11,7 @@ Then, on the command line, clone this repo, delete the figures and re-run the [g
 
 ```bash
 git clone git@github.com:ericminikel/prnp_penetrance.git
+cd prnp_penetrance
 rm figures/figure1b.pdf
 rm figures/figure2.pdf
 rm figures/figure3.pdf
