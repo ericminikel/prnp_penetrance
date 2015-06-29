@@ -215,7 +215,7 @@ axis(side=2, col.axis = overall_color, col.ticks = overall_color, at=(0:3)/100, 
 mtext(side=2, line=3, text=paste('Overall ExAC distribution density, n = ', n_age_text), col=overall_color, cex=.9)
 par(new=TRUE)
 hist(indivs_with_path_alleles$age, breaks=6, xlim=c(16,87), col=alpha(prnp_color, .5), border=NA, axes=FALSE, xlab='', ylab='', main='')
-axis(side=4, at=(0:8), labels=0:8, lwd=0, lwd.ticks=1, las=1, col.axis=prnp_color, col.ticks=prnp_color)
+axis(side=4, at=(0:12), labels=0:12, lwd=0, lwd.ticks=1, las=1, col.axis=prnp_color, col.ticks=prnp_color)
 mtext(side=4, line=3, text=paste('Individuals with reportedly pathogenic PRNP variants, n = ',n_prnp,sep=''), col=prnp_color, cex=.9)
 dev.off()
 
