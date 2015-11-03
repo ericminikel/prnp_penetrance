@@ -89,8 +89,8 @@ pdf('figures/figure2.pdf',width=10,height=4.7)
 par(mar=c(5,6,1,1))
 plot(NA,NA,axes=FALSE,
      xlim=c(-40,600),ylim=c(0,10.5),
-     xlab='Cases reported to prion surveillance centers',
-     ylab='Allele count in ExAC\npopulation controls',
+     xlab='cases reported to prion surveillance centers',
+     ylab='allele count in ExAC\npopulation controls',
      main='',
      cex.lab=1.5,cex.main=2)
 abline(h=0:10,col='#CCCCCC',lwd=.25)
@@ -111,13 +111,13 @@ dev.off()
 # Figure 3.
 # formulae for penetrance and 95% confidence intervals as per Kirov et al. 2014
 # see http://www.biologicalpsychiatryjournal.com/article/S0006-3223(13)00676-8/pdf
-assumed_baseline_risk = 1e-4
+assumed_baseline_risk = 2e-4
 penetrance = function(af_case, af_control, baseline_risk=assumed_baseline_risk) {
   calculated_penetrance = af_case * baseline_risk / af_control
   estimated_penetrance = pmin(1,pmax(0,calculated_penetrance)) # trim to [0,1] support
   return (estimated_penetrance)
 }
-penetrance_confint = function (ac_case, n_case, ac_control, n_control, baseline_risk=1e-4) {
+penetrance_confint = function (ac_case, n_case, ac_control, n_control, baseline_risk=assumed_baseline_risk) {
   # for a genotypic model, use 1*n_case; for allelic, use 2*n_case
   # here, results are virtually identical.
   case_confint = binom.confint(x=ac_case,n=2*n_case,method='wilson')
@@ -180,7 +180,7 @@ forest_data$comparison_text = paste(forest_data$case_display," (",
                                     forest_data$control_display," (",
                                     forest_data$control_af_display,")",sep='')
 
-cols = c(-5.5,-4.5,-4,0,4.5)
+cols = c(-5.2,-4.2,-3.7,0,4.5)
 names(cols) = c("Variant(s)","Ancestry","Comparison","Forest","Bar")
 headers = c("Variant(s)","Ancestry","Comparison (allele frequencies)","Lifetime risk (95%CI)","Positive family history in cases")
 
@@ -188,13 +188,14 @@ headers = c("Variant(s)","Ancestry","Comparison (allele frequencies)","Lifetime 
 # see http://stackoverflow.com/a/12775087/3806692
 # note that saving this plot as PDF takes ~30 seconds; it doesn't mean the script
 # has hung.
-cairo_pdf('figures/figure3.pdf',width=16,height=6,pointsize=15,bg='#FFFFFF00') # default pointsize = 12. background transparent.
+cairo_pdf('figures/figure3.pdf',width=15,height=6,pointsize=15,bg='#FFFFFF00') # default pointsize = 12. background transparent.
 par(mar=c(5,2,3,2))
-xlims = c(-6,8.5)
+xlims = c(-5.7,8.5)
+vertical_lines = c(log10(2e-4) - log10(1e-4), 1:4)
 plot(NA,NA,xlim=xlims,ylim=c(0,4),axes=FALSE,xlab='',ylab='',xaxs='i',yaxs='i')
 
 # plot text at left
-mtext(side=3,at=cols-c(.5,.5,0,0,0)+.05,text=headers,font=2,cex=0.9,adj=0)
+mtext(side=3,at=cols+c(-.5,-.5,0,.3,0)+.05,text=headers,font=2,cex=0.9,adj=0)
 text(x=rep(cols["Variant(s)"],4),y=c(3.5,2.5,1.5,0.5),font=2,cex=.9,
      labels=c("M232R","V180I","V210I","P102L\nA117V\nD178N\nE200K"))
 text(x=rep(cols["Ancestry"],4),y=c(3.5,2.5,1.5,0.5),font=2,cex=.9,
@@ -202,25 +203,32 @@ text(x=rep(cols["Ancestry"],4),y=c(3.5,2.5,1.5,0.5),font=2,cex=.9,
 text(x=rep(cols["Comparison"],6),y=forest_data$yvals,pos=4,font=2,cex=.9,
      labels=forest_data$comparison_text)
 # plot the forest plot
-x_offset = -log10(assumed_baseline_risk) # plot starts at population baseline risk of ~.01%
-for (i in 1:dim(forest_data)[1]) {
-  points(x=x_offset+log10(cols["Forest"]+forest_data$best[i]),y=forest_data$yval[i],pch=19,cex=2)
-  points(x=x_offset+log10(cols["Forest"]+c(forest_data$lower95[i],forest_data$upper95[i])),y=rep(forest_data$yval[i],2),type='l',lwd=4)
-}
-abline(v=0:4,lwd=1)
-axis(side=1,at=0:4,labels=c(".01%",".1%","1%","10%","100%"),lwd=0,lwd.ticks=0,font=2)
-mtext(side=1,at=c(0,4),text=c('population\nbaseline risk','complete\npenetrance'),line=2,font=2,padj=1)
+x_offset = -log10(1e-4) # plot starts at .01%, which is now below the baseline assumed risk
+points(x=x_offset+log10(cols["Forest"]+forest_data$best),y=forest_data$yval,pch=19,cex=1.8)
+segments(x0=x_offset+log10(cols["Forest"]+forest_data$lower95),x1=x_offset+log10(cols["Forest"]+forest_data$upper95), y0=forest_data$yval, y1=forest_data$yval, lwd=4)
+# for (i in 1:dim(forest_data)[1]) {
+#   points(x=x_offset+log10(cols["Forest"]+forest_data$best[i]),y=forest_data$yval[i],pch=19,cex=2)
+#   points(x=x_offset+log10(cols["Forest"]+c(forest_data$lower95[i],forest_data$upper95[i])),y=rep(forest_data$yval[i],2),type='l',lwd=4)
+# }
+abline(v=vertical_lines,lwd=1)
+axis(side=1,at=vertical_lines,labels=c(".02%",".1%","1%","10%","100%"),lwd=0,lwd.ticks=0,font=2)
+mtext(side=1,at=vertical_lines[c(1,5)],text=c('population\nbaseline risk','complete\npenetrance'),line=2,font=2,padj=1)
 
 # plot family history barplot
-# \u2020 is &dagger;. \u2021 is &Dagger;
-famhx = data.frame(rate=c(.03,.02,.12,.49,.70,.88),
-                   y=c(3.5,2.5,1.5,0.75,0.50,0.25),
-                   text=c("3%","2%","12%","49% (E200K)","70% (GSS\u2020)","88% (FFI\u2021)"),
-                   color=rep('#CD2626',6))
-for (i in 1:dim(famhx)[1]) {
-  points(x=c(cols["Bar"],cols["Bar"]+famhx$rate[i]*3),y=rep(famhx$y[i],2),type='l',lend=1,lwd=25,col=famhx$color[i])
-  text(x=cols["Bar"]+famhx$rate[i]*3,y=famhx$y[i],pos=4,label=famhx$text[i],font=2,cex=.9)
-}
+famhx_data = data.frame(type=c('M232R','V180I','V210I','E200K','GSS','FFI'),
+                        hx_positive=c(2,5,7,56,23,44),
+                        out_of=c(63,218,57,114,33,50),
+                        y=c(3.5,2.5,1.5,0.75,0.50,0.25),
+                        text=c("3%","2%","12%","49% (E200K)","70% (GSS\u2020)","88% (FFI\u2021)"), # \u2020 is &dagger;. \u2021 is &Dagger;
+                        color=rep('#CD2626',6))
+confint_results = binom.confint(x=famhx_data$hx_positive, n=famhx_data$out_of, method='wilson')
+famhx_data$x = confint_results$mean
+famhx_data$lower95 = confint_results$lower
+famhx_data$upper95 = confint_results$upper
+
+segments(x0=cols["Bar"], x1=cols["Bar"]+famhx_data$x*3, y0=famhx_data$y, y1=famhx_data$y,lend=1,lwd=25,col=famhx_data$color)
+arrows(x0=cols["Bar"]+famhx_data$lower95*3, x1=cols["Bar"]+famhx_data$upper95*3, y0=famhx_data$y, y1=famhx_data$y, code=3, length=.05, angle=90, col='#000000', lwd=1.5)
+text(x=cols["Bar"]+famhx_data$upper95*3, y=famhx_data$y, pos=4, label=famhx_data$text, font=2, cex=.9)
 
 abline(h=0:4,lwd=.5)
 
