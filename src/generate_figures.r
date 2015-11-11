@@ -272,38 +272,52 @@ dev.off()
 
 
 
-# descriptive statistics quoted in main text
+#### Calcluations for the descriptive statistics quoted in the main text
 
+# "In our surveillance cohorts, 65% of cases underwent PRNP open reading frame sequencing, with 12% of all cases, or 18% of sequenced cases, possessing a rare variant"
+ac_case["TOTAL","prnp_sequenced"]/ac_case["TOTAL","definite_plus_probable"]
 ac_case["TOTAL","with_rare_variants"]/ac_case["TOTAL","definite_plus_probable"]
 ac_case["TOTAL","with_rare_variants"]/ac_case["TOTAL","prnp_sequenced"]
 
+# "0.4% of ExAC individuals harbor a rare (<0.1%) missense variant"
+sum(ac_exac$ac[(ac_exac$class=='missense')]) / sum(exac_pop_summary$n_exac)
+
+# "...four missense variants - P102L, A117V, D178N and E200K... account for >50% of genetic prion disease cases..."
 sum(ac_case["TOTAL",mendelians])/ac_case["TOTAL","with_rare_variants"]
 
-# how many cases do not-discussed-in-text-nor-supplement variants account for?
+# "...with confidence intervals including all reported estimates of E200K penetrance based on survival analysis, which range from ~60% to ~90%"
+forest_data[forest_data$comparisons=='Mendelians_ExAC',c('lower95','upper95')]
+
+# "Rounding down to 1 instead would raise our estimates of penetrance..." (Materials and Methods)
+penetrance_confint(ac_case["Japan","V180I"] + ac_case["Japan","V180I_and_M232R_in_trans"],
+                   ac_case["Japan","prnp_sequenced"],
+                   1,
+                   ac_23andme["V180I","pop_n"])
+
+penetrance_confint(ac_case["Japan","V180I"] + ac_case["Japan","V180I_and_M232R_in_trans"],
+                   ac_case["Japan","prnp_sequenced"],
+                   5,
+                   ac_23andme["V180I","pop_n"])
+
+penetrance_confint(sum(ac_case["TOTAL",mendelians]),
+                   ac_case["TOTAL","prnp_sequenced"],
+                   1,
+                   round(mean(ac_23andme$called_genotypes[ac_23andme$variant %in% mendelians])))
+
+penetrance_confint(sum(ac_case["TOTAL",mendelians]),
+                   ac_case["TOTAL","prnp_sequenced"],
+                   5,
+                   round(mean(ac_23andme$called_genotypes[ac_23andme$variant %in% mendelians])))
+
+# "Other variants" paragraph in the Supplementary Discussion
 discussed = c(mendelians,"M232R","V180I","V210I","P39L","R148H","R208C","E196A","V203I","T188R","R208H")
 missense_cases_discussed = sum(ac_case["TOTAL",colnames(ac_case) %in% discussed])
-missense_cases_not_discussed = sum(ac_case["TOTAL",(1:dim(ac_case)[2] > 19 & !(colnames(ac_case) %in% discussed) & !(substr(colnames(ac_case),nchar(colnames(ac_case)),nchar(colnames(ac_case))) == 'X'))])
-(missense_cases_not_discussed) / (missense_cases_discussed + missense_cases_not_discussed)
+missense_cases_not_discussed = ac_case["TOTAL",(1:dim(ac_case)[2] > 19 & !(colnames(ac_case) %in% discussed) & nchar(colnames(ac_case)) <= 5 & !grepl('X',colnames(ac_case)))]
+sum(missense_cases_not_discussed)
 
-
-# some one-off calculations regarding the 1-5 rounding, supporting facts quoted inline in Online Methods
-penetrance_confint(ac_case["Japan","V180I"] + ac_case["Japan","V180I_and_M232R_in_trans"],
-                   ac_case["Japan","prnp_sequenced"],
-                   1,
-                   ac_23andme["V180I","pop_n"])
-
-penetrance_confint(ac_case["Japan","V180I"] + ac_case["Japan","V180I_and_M232R_in_trans"],
-                   ac_case["Japan","prnp_sequenced"],
-                   5,
-                   ac_23andme["V180I","pop_n"])
-
-penetrance_confint(sum(ac_case["TOTAL",mendelians]),
-                   ac_case["TOTAL","prnp_sequenced"],
-                   1,
-                   round(mean(ac_23andme$called_genotypes[ac_23andme$variant %in% mendelians])))
-
-penetrance_confint(sum(ac_case["TOTAL",mendelians]),
-                   ac_case["TOTAL","prnp_sequenced"],
-                   5,
-                   round(mean(ac_23andme$called_genotypes[ac_23andme$variant %in% mendelians])))
+controls_with = sum(ac_exac$ac[(ac_exac$class=='missense' & !(ac_exac$variant %in% discussed))])
+controls_without = sum(exac_pop_summary$n_exac) - sum(ac_exac$ac[(ac_exac$class=='missense' & !(ac_exac$variant %in% discussed))])
+cases_with = sum(missense_cases_not_discussed)
+cases_without = ac_case["TOTAL","prnp_sequenced"] - sum(missense_cases_not_discussed)
+fisher.test(matrix(c(cases_with, cases_without, controls_with, controls_without),nrow=2),alternative='two.sided')
 
