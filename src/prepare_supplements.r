@@ -194,7 +194,7 @@ sum(annos$this_alt_ab[gt_correct] <= .7 & annos$this_alt_ab[gt_correct] >= .3,na
 sum(annos$this_alt_ad[gt_correct] >= 10,na.rm=TRUE)/sum(gt_correct,na.rm=TRUE)
 
 # Figure S1
-meta = read.table('../exac_papers/data_nosync/exac_meta_with_age.tsv',header=TRUE,sep='\t')
+meta = read.table('../exac_papers/misc_data/exac_meta_with_age.tsv',header=TRUE,sep='\t')
 meta$id = gsub(" ","_",meta$vcf_sampleid)
 indivs_with_path_alleles$id = gsub(" ","_",indivs_with_path_alleles$sampleid)
 indivs_with_path_alleles$age = meta$age[match(indivs_with_path_alleles$id, meta$id)]
