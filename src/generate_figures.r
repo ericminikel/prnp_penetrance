@@ -89,8 +89,8 @@ pdf('figures/figure2.pdf',width=10,height=4.7)
 par(mar=c(5,6,1,1))
 plot(NA,NA,axes=FALSE,
      xlim=c(-40,600),ylim=c(0,10.5),
-     xlab='cases reported to prion surveillance centers',
-     ylab='allele count in ExAC\npopulation controls',
+     xlab='Cases reported to prion surveillance centers',
+     ylab='Allele count in ExAC\npopulation controls',
      main='',
      cex.lab=1.5,cex.main=2)
 abline(h=0:10,col='#CCCCCC',lwd=.25)
@@ -105,7 +105,7 @@ axis(side=2,at=0:10,labels=0:10,lwd=0,lwd.ticks=1,cex=.5,las=1)
 points(case_control$ac_case[highlight_subset],case_control$ac_exac[highlight_subset],cex=2.5,pch=2,col='red')
 text(x=case_control_text$ac_case,y=case_control_text$ac_exac,pos=case_control_text$pos,labels=case_control_text$variant,cex=1.2)
 rect(xleft=350,xright=700,ybottom=8.1,ytop=11,col='#FFFFFF',border=NA)
-legend('topright',c("reportedly pathogenic variant","segregation in multiple multigenerational families;\nspontaneous disease in mouse models"),col=c('black','red'),pt.cex=c(1.5,2),cex=.8,pch=c(19,2),bty='n',bg='#FFFFFF')
+legend('topright',c("Reportedly pathogenic variant","Segregation in multiple multigenerational families;\nspontaneous disease in mouse models"),col=c('black','red'),pt.cex=c(1.5,2),cex=.8,pch=c(19,2),bty='n',bg='#FFFFFF')
 dev.off()
 
 # Figure 3.
