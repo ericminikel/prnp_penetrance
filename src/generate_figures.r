@@ -170,7 +170,7 @@ forest_data$case_af = forest_data$ac_case / (2*forest_data$n_case)
 forest_data$control_af = forest_data$ac_control / (2*forest_data$n_control)
 forest_data$case_af_display = paste(formatC(100*forest_data$case_af,format='fg',digits=2),'%',sep='')
 forest_data$control_af_display = paste(formatC(100*forest_data$control_af,format='fg',digits=2),'%',sep='')
-forest_data$control_af_display[c(4,7)] = paste("<",forest_data$control_af_display[c(4,7)],"*",sep='')
+forest_data$control_af_display[c(4,7)] = paste("<",forest_data$control_af_display[c(4,7)],"\u{2055}",sep='')
 forest_data$case_display = 'Cases'
 forest_data$control_display = ''
 forest_data$control_display[c(1,3,5,6)] = 'ExAC'
@@ -212,7 +212,7 @@ segments(x0=x_offset+log10(cols["Forest"]+forest_data$lower95),x1=x_offset+log10
 # }
 abline(v=vertical_lines,lwd=1)
 axis(side=1,at=vertical_lines,labels=c(".02%",".1%","1%","10%","100%"),lwd=0,lwd.ticks=0,font=2)
-mtext(side=1,at=vertical_lines[c(1,5)],text=c('population\nbaseline risk','complete\npenetrance'),line=2,font=2,padj=1)
+mtext(side=1,at=vertical_lines[c(1,5)],text=c('Population\nbaseline risk','Complete\npenetrance'),line=2,font=2,padj=1)
 
 # plot family history barplot
 famhx_data = data.frame(type=c('M232R','V180I','V210I','E200K','GSS','FFI'),
