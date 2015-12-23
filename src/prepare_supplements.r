@@ -212,11 +212,11 @@ hist(meta$age, breaks=20, prob=TRUE, col=alpha(overall_color,.5),
 abline(h=0, col='black')
 axis(side=1, at=c(18,30,40,50,60,70,85), labels=c('\u226418', '30', '40', '50', '60', '70', '\u226585'), lwd=0, lwd.ticks=1)
 axis(side=2, col.axis = overall_color, col.ticks = overall_color, at=(0:3)/100, labels=percent((0:3)/100), lwd=0, lwd.ticks=1, las=1,)
-mtext(side=2, line=3, text=paste('Overall ExAC distribution density, n = ', n_age_text), col=overall_color, cex=.9)
+mtext(side=2, line=3, text=bquote('Overall ExAC distribution density, '*italic('N')*' = '*.(n_age_text)), col=overall_color, cex=.9)
 par(new=TRUE)
 hist(indivs_with_path_alleles$age, breaks=6, xlim=c(16,87), col=alpha(prnp_color, .5), border=NA, axes=FALSE, xlab='', ylab='', main='')
 axis(side=4, at=(0:12), labels=0:12, lwd=0, lwd.ticks=1, las=1, col.axis=prnp_color, col.ticks=prnp_color)
-mtext(side=4, line=3, text=paste('Individuals with reportedly pathogenic PRNP variants, n = ',n_prnp,sep=''), col=prnp_color, cex=.9)
+mtext(side=4, line=3, text=bquote('Individuals with reportedly pathogenic PRNP variants, '*italic('N')*' = '*.(n_prnp)), col=prnp_color, cex=.9)
 dev.off()
 
 # stats to quote in Figure S1 legend
