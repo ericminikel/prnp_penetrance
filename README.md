@@ -1,4 +1,4 @@
-### Quantifying penetrance in a dominant disease gene using large population control cohorts
+### Quantifying prion disease penetrance using large population control cohorts
 
 This repository holds the source code, data, and pre-print for the following manuscript:
 
