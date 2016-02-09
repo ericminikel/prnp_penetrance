@@ -321,7 +321,7 @@ Abbreviations: OPRD, octapeptide repeat deletion; OPRI, octapeptide repeat inser
 | D167G | [Bishop 2009] |  |
 | D167N | [Beck 2010] |  |
 | V176G | [Simpson 2013] |  |
-| D178Efs25X | [Mastuzono 2013] |  |
+| D178Efs25X | [Matsuzono 2013] |  |
 | D178N | [Goldfarb 1991a] | [Medori 1992], [Goldfarb 1992] |
 | V180I | [Hitoshi 1993] | [Chasseigneaux 2006] |
 | T183A | [Nitrini 1997] | [Grasbon-Frodl 2004] |
