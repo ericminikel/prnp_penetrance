@@ -1207,7 +1207,7 @@ The distribution of ages, available for 40 of 52 individuals with reportedly pat
 [CJD US 2015]: http://web.archive.org/web/20150401163801/http://www.cjdsurveillance.com/pdf/web_table.pdf
 [CJD UK 2015]: http://web.archive.org/web/20150330211505/http://www.cjd.ed.ac.uk/documents/figs.pdf
 [Kong 2004]: https://cshmonographs.org/index.php/monographs/article/view/4035
-[Nozaki 2011]: http://brain.oxfordjournals.org/content/brain/early/2011/11/16/brain.awr295.full.pdf
+[Nozaki 2012]: http://brain.oxfordjournals.org/content/brain/early/2011/11/16/brain.awr295.full.pdf
 [Li 1961]: http://catalog.hathitrust.org/Record/001496005 "C.-C. Li, Human genetics: principles and methods. (The Blakiston Division, McGraw-Hill Book Company, Inc., New York, 1961; http://catalog.hathitrust.org/Record/001496005)"
 
 
