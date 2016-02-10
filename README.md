@@ -34,4 +34,9 @@ rm figures/figure4.pdf
 Rscript src/generate_figures.r
 ```
 
+#### See also
+
++ [Robert Green's perspective piece](http://stm.sciencemag.org/content/8/322/322fs3.full) about this work, including how it changed one patient's prognosis.
++ [My CureFFI.org blog post](http://www.cureffi.org/2016/01/20/does-this-mean-ill-definitely-get-the-disease/) telling the personal story behind this study.
++ Coverage in [STAT](http://www.statnews.com/2016/01/20/prion-disease-genes/), [AAAS](http://www.aaas.org/news/genetic-risk-prion-disease-reevaluated-thanks-big-data), [Nature Reviews Genetics](http://www.nature.com/nrg/journal/vaop/ncurrent/full/nrg.2016.9.html), [Neurology Today](http://journals.lww.com/neurotodayonline/_layouts/15/oaks.journals.mobile/post.aspx?blogId=1&postId=536), and [El Mundo](http://www.elmundo.es/salud/2016/01/21/569fdbff22601d10308b465f.html).
 
